@@ -11,8 +11,8 @@ library(tidyverse)
 set.seed(1)
 
 #traz os dados
-dados = read.csv("workshop_cemeai_spatinterp_data.csv",T)
-shp = read_sf("lim_poly.shp")
+dados = read.csv("./dados/workshop_cemeai_spatinterp_data.csv",T)
+shp = read_sf("./shapefile/lim_poly.shp")
 
 #rasterização
 #mapaRasterizado = raster(shp, res=10)
@@ -84,10 +84,3 @@ for(i in c("A","B")){
 }
 
 rownames(metricas) = c("A","B")
-
-id = 2
-valueInterpolation =  predict(modelRF, dadosTeste, predict.all=T)  
-todas_as_estimativas = valueInterpolation$individual[id,]
-hist(todas_as_estimativas,10,main=paste("Histograma das saídas de todas as árvores para a amostra",id))
-lines(c(valueInterpolation$aggregate[id],valueInterpolation$aggregate[id]),c(0,200),col="red",lty=2)
-quantile(todas_as_estimativas,c(0.025,0.975))
